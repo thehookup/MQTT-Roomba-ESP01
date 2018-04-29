@@ -1,0 +1,9 @@
+switch.roomba:
+  icon: mdi:roomba
+sensor.roomba:
+  icon: mdi:roomba
+sensor.roomba_battery:
+  icon: mdi:battery
+  unit_of_measurement: '%'
+sensor.roomba_status:
+  icon: mdi:format-list-bulleted

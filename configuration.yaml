@@ -1,0 +1,15 @@
+switch:
+#Roomba Switch
+  - platform: mqtt
+    name: "Roomba"
+    command_topic: "roomba/commands"
+    payload_on: "start"
+    payload_off: "stop"  
+sensor:
+#Roomba Sensors
+  - platform: mqtt
+    name: "Roomba Status"
+    state_topic: "roomba/currentStatus"
+  - platform: mqtt
+    name: "Roomba Battery"
+    state_topic: "roomba/battery"
