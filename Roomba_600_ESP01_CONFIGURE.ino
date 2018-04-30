@@ -142,17 +142,15 @@ void sendInfoRoomba()
   client.publish("roomba/battery", battery_percent_send);
 }
 
-void stayAwake()
+void stayAwakeLow()
 {
-  if(toggle == true)
-  {
-    digitalWrite(noSleepPin, LOW);
-  }
-  if(toggle == false)
-  {
-    digitalWrite(noSleepPin, HIGH);
-  }
-  toggle = !toggle;
+  digitalWrite(noSleepPin, LOW);
+  timer.setTimeout(1000, stayAwakeHigh);
+}
+
+void stayAwakeHigh()
+{
+  digitalWrite(noSleepPin, HIGH);
 }
 
 
@@ -160,6 +158,7 @@ void stayAwake()
 void setup() 
 {
   pinMode(noSleepPin, OUTPUT);
+  digitalWrite(noSleepPin, HIGH);
   Serial.begin(115200);
   Serial.write(129);
   delay(50);
@@ -169,7 +168,7 @@ void setup()
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
   timer.setInterval(5000, sendInfoRoomba);
-  timer.setInterval(1000, stayAwake);
+  timer.setInterval(60000, stayAwakeLow);
 }
 
 void loop() 
@@ -181,5 +180,4 @@ void loop()
   client.loop();
   timer.run();
 }
-
 
