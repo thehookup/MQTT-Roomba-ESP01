@@ -124,6 +124,7 @@ void stopCleaning()
 
 void sendInfoRoomba()
 {
+  roomba.start(); 
   roomba.getSensors(21, tempBuf, 1);
   battery_Voltage = tempBuf[0];
   delay(50);
