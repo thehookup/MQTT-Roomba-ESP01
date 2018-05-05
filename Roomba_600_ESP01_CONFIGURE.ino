@@ -125,7 +125,6 @@ void stopCleaning()
 void sendInfoRoomba()
 {
   roomba.getSensors(21, tempBuf, 1);
-  //battery_Voltage = tempBuf[1]+256*tempBuf[0];
   battery_Voltage = tempBuf[0];
   delay(50);
   roomba.getSensors(25, tempBuf, 2);
@@ -133,13 +132,20 @@ void sendInfoRoomba()
   delay(50);
   roomba.getSensors(26, tempBuf, 2);
   battery_Total_mAh = tempBuf[1]+256*tempBuf[0];
-  int nBatPcent = 100*battery_Current_mAh/battery_Total_mAh;
+  if(battery_Total_mAh != 0)
+  {
+    int nBatPcent = 100*battery_Current_mAh/battery_Total_mAh;
+    String temp_str2 = String(nBatPcent);
+    temp_str2.toCharArray(battery_percent_send, temp_str2.length() + 1); //packaging up the data to publish to mqtt
+    client.publish("ur/battery", battery_percent_send);
+  }
+  if(battery_Total_mAh == 0)
+  {  
+    client.publish("ur/battery", "NO DATA");
+  }
   String temp_str = String(battery_Voltage);
   temp_str.toCharArray(battery_Current_mAh_send, temp_str.length() + 1); //packaging up the data to publish to mqtt
-  client.publish("roomba/charging", battery_Current_mAh_send);
-  String temp_str2 = String(nBatPcent);
-  temp_str2.toCharArray(battery_percent_send, temp_str2.length() + 1); //packaging up the data to publish to mqtt
-  client.publish("roomba/battery", battery_percent_send);
+  client.publish("ur/charging", battery_Current_mAh_send);
 }
 
 void stayAwakeLow()
