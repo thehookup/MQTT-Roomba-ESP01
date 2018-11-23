@@ -1,3 +1,8 @@
+//This version is for the Roomba 600 Series
+//Connect a wire from D4 on the nodeMCU to the BRC pin on the roomba to prevent sleep mode.
+
+
+
 #include <PubSubClient.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
