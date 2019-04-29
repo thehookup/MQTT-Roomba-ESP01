@@ -156,6 +156,7 @@ void setup()
   delay(50);
   Serial.write(11);
   delay(50);
+  WiFi.mode(WIFI_STA);
   setup_wifi();
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
